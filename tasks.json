@@ -2,11 +2,16 @@
     {
         "taskId": 1,
         "taskTitle": "Code",
-        "taskCompleted": true
+        "taskCompleted": false
     },
     {
         "taskId": 2,
         "taskTitle": "Listen to music",
-        "taskCompleted": true
+        "taskCompleted": false
+    },
+    {
+        "taskId": 3,
+        "taskTitle": "go for a long walk",
+        "taskCompleted": false
     }
 ]

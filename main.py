@@ -6,9 +6,9 @@ import storage
 #should this be here or in main?
 def view_tasks():
     task_list = storage.load_tasks() # returns a dictionary
-    count = 0
+    count = 1
     for task in task_list:
-        print(str(count) + ": " + task)
+        print(str(count) + ": " + task["taskTitle"])
         count = count + 1
 
 def main():

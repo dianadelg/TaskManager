@@ -7,29 +7,28 @@ import storage
 
 #add task
 def add_task(newTask):
+    id = 0 
     task_list = storage.load_tasks()
-    task_list.append(newTask)
+    new_task = {}
+    if not task_list:
+        # means empty, 0 elements
+        #create dictionary with this
+        new_task = {
+            "taskId": 1,
+            "taskTitle": newTask,
+            "taskCompleted": False
+        }
+    else:
+        # get max task id
+        latestID = len(task_list)+1
+        #create dictionary with this
+        new_task = {
+            "taskId": latestID,
+            "taskTitle": newTask,
+            "taskCompleted": False
+        }
+    task_list.append(new_task)
     storage.save_tasks(task_list)
-    # AHH add this:
-    # 1. Load existing tasks → task_list
-
-    # 2. If empty:
-    # → id = 1
-
-    # 3. Else:
-    # → find max(taskId)
-    # → id = max + 1
-
-    # 4. Create new task:
-    # {
-    #     taskId: ?
-    #     taskTitle: ?
-    #     taskCompleted: false
-    # } which should be type dictionary. tasks are a list of dictionaries!!!
-
-    # 5. Append that object
-
-    # 6. Save
 
 #update task as complete
 def update_complete(taskId):
