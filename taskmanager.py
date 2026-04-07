@@ -5,6 +5,8 @@
 # It does NOT care how data is stored
 import storage
 
+#indexed_data = {item["id"]: item for item in task_list} #index items by id and then can search
+
 #add task
 def add_task(newTask):
     id = 0 
@@ -40,4 +42,14 @@ def rename_task(taskId, updatedTask):
 
 #delete task
 def delete_task(taskId):
-    print("Task deleted!")
+    task_list = storage.load_tasks()    
+    # used to filter current list and remove id passed in, returns list - that element
+    updated_task_list = [t for t in task_list if t.get('taskId') != taskId]
+    # when we delete, we need to update all of the taskIds to be in order for clarity to user
+    for index, task in enumerate(updated_task_list, 1):
+        task["taskId"] = index
+    storage.save_tasks(updated_task_list)
+
+#mark task as complete
+def mark_complete(taskId):
+    print("Task marked as complete!")

@@ -8,7 +8,7 @@ def view_tasks():
     task_list = storage.load_tasks() # returns a dictionary
     count = 1
     for task in task_list:
-        print(str(count) + ": " + task["taskTitle"])
+        print("Task " + str(count) + ": " + task["taskTitle"] + "   Task Completed: " + str(task["taskCompleted"]))
         count = count + 1
 
 def main():
@@ -20,7 +20,8 @@ def main():
         print("Type 1: Add task")
         print("Type 2: Delete task")
         print("Type 3: Edit task")
-        print("Type 4: View all current tasks")
+        print("Type 4: Mark task as complete")
+        print("Type 5: View all current tasks")
         print("Type 0: Exit Task Manager")
         currentAction = int(input())
         
@@ -32,22 +33,36 @@ def main():
             print("Task: " + newTask + " added!")
             print()
         elif (currentAction == 2):
-            # do delete
-            print("Which task do you want to delete?")
-            view_tasks()
-            deleteTask = int(input())
-            taskmanager.delete_task(deleteTask)
-            print("Task deleted!")
-            print()
+            task_list = storage.load_tasks() #should we make this like a global var?
+                # if no elements to delete, print no elements to delete
+            if not task_list:
+                # means empty, 0 elements
+                print("List empty, nothing to delete!")
+            else:
+                # do delete
+                print("Which task do you want to delete?")
+                view_tasks()
+                deleteTask = int(input())
+                # for now, assuming user puts a valid index
+                taskmanager.delete_task(deleteTask)
+                print("Task deleted!")
+                print()
         elif (currentAction == 3):
             # do edit
             taskmanager.rename_task()
             print("Task updated!")
             print()
         elif (currentAction == 4):
+            # do mark task as complete
+            taskmanager.mark_complete()
+            print("Task completed!")
+        elif (currentAction == 5):
             # do list all tasks
             view_tasks()
             print()
+        elif (currentAction == 0):
+            print("Goodbye!")
+            return
         else:
             # means invalid number entered
             print("Please enter a valid action")
