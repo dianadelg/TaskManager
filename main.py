@@ -48,17 +48,49 @@ def main():
                 print("Task deleted!")
                 print()
         elif (currentAction == 3):
-            # do edit
-            taskmanager.rename_task()
-            print("Task updated!")
+            # edit/rename task
+            task_list = storage.load_tasks() #should we make this like a global var?
+                # if no elements to delete, print no elements to delete
+            if not task_list:
+                # means empty, 0 elements
+                print("List empty, nothing to edit!") # I feel like we should pull this out as a prelim check? so we do not repeat for multiple
+            else:
+                # do delete
+                print("Which task do you want to edit?")
+                view_tasks()
+                editTask = int(input())
+                # for now, assuming user puts a valid index
+                print("What do you want to edit the task to be?")
+                updatedTask = input()
+                taskmanager.rename_task(editTask, updatedTask)
+                print("Task edited!")
             print()
         elif (currentAction == 4):
-            # do mark task as complete
-            taskmanager.mark_complete()
-            print("Task completed!")
+            # edit/rename task
+            task_list = storage.load_tasks() #should we make this like a global var?
+                # if no elements to delete, print no elements to delete
+            if not task_list:
+                # means empty, 0 elements
+                print("List empty, nothing to mark complete!")
+            else:
+            # update to complete
+                print("Which task do you want to mark as completed?")
+                view_tasks()
+                completeTask = int(input())
+                # for now, assuming user puts a valid index
+                # do mark task as complete
+                taskmanager.mark_complete(completeTask)
+                print("Task completed!")
+            print()
         elif (currentAction == 5):
             # do list all tasks
-            view_tasks()
+            task_list = storage.load_tasks() #should we make this like a global var?
+            # if no elements to delete, print no elements to delete
+            if not task_list:
+                # means empty, 0 elements
+                print("There are currently no tasks!")
+            else:
+                view_tasks()
             print()
         elif (currentAction == 0):
             print("Goodbye!")

@@ -5,8 +5,6 @@
 # It does NOT care how data is stored
 import storage
 
-#indexed_data = {item["id"]: item for item in task_list} #index items by id and then can search
-
 #add task
 def add_task(newTask):
     id = 0 
@@ -32,13 +30,13 @@ def add_task(newTask):
     task_list.append(new_task)
     storage.save_tasks(task_list)
 
-#update task as complete
-def update_complete(taskId):
-    task_list = storage.load_tasks()
-
 #rename task
 def rename_task(taskId, updatedTask):
-    print("Task renamed!")
+    task_list = storage.load_tasks()
+    for task in task_list:
+         if task["taskId"] == taskId:
+             task["taskTitle"] = updatedTask
+    storage.save_tasks(task_list)
 
 #delete task
 def delete_task(taskId):
@@ -52,4 +50,8 @@ def delete_task(taskId):
 
 #mark task as complete
 def mark_complete(taskId):
-    print("Task marked as complete!")
+    task_list = storage.load_tasks()
+    for task in task_list:
+         if task["taskId"] == taskId:
+             task["taskCompleted"] = True
+    storage.save_tasks(task_list)
