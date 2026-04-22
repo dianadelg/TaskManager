@@ -67,8 +67,6 @@ def mark_complete(task_ID):
 # So if the user enters 999, code will still say “Task deleted!” even if that task wasn’t there.
 # As expected. Need to fix
 
-# add_task(title)
-# rename_task(task_id, new_title)
-# mark_complete(task_id)
-# delete_task(task_id)
-# maybe get_tasks() which calls storage and converts rows into task dictionaries
+#TO DO:
+# Add handling for invalid task IDs
+# Add handling for non-numeric input

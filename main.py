@@ -67,7 +67,7 @@ def main():
             if(taskmanager.rename_task(edit_task, updated_task)):
                 print("Task edited!")
             else:
-                print("List empty, nothing to delete!")
+                print("List empty, nothing to edit!")
             print()
 
         elif (current_action == 4):
@@ -78,6 +78,8 @@ def main():
             # for now, assuming user puts a valid index
             if(taskmanager.mark_complete(complete_task)):
                 print("Task completed!")
+            else:
+                print("No tasks to mark complete!")
             print()
 
         elif (current_action == 5):
