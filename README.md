@@ -1,31 +1,33 @@
 # TaskManager
-A progressively built full-stack task manager application designed to evolve from a simple CLI tool into a multi-user web application with authentication and AI integrations.
+
+A progressively built full-stack task manager application evolving from a simple CLI tool into a multi-user web application with authentication and AI-powered features.
 
 ---
 
 ## Overview
 
-This project is being developed in phases to simulate how real-world applications grow over time—from core backend logic to a fully interactive web app with user authentication.
+This project is built in phases to mirror how real-world applications evolve—from simple scripts to scalable, full-stack systems.
 
 The goal is to strengthen understanding of:
 
 * Backend architecture
-* Data persistence
+* Data persistence (file-based to database systems)
 * Full-stack development with Flask
 * User authentication and session management
-* AI to prioritize tasks
+* AI-driven task prioritization
 
 ---
 
-## Tech Stack (Planned...subject to change!)
+## Tech Stack (Evolving)
 
-* **Backend:** Python
-* **Frontend (Phase 2):** Flask + HTML/CSS (Jinja templates)
-* **Storage:**
+* Backend: Python
+* Frontend (Phase 2): Flask + HTML/CSS (Jinja templates)
+* Storage:
 
   * Phase 1: JSON file
-  * Future: SQLite / PostgreSQL
-* **Authentication (Phase 3):** Flask sessions + hashed passwords
+  * Phase 1.5: SQLite
+  * Future: PostgreSQL
+* Authentication (Phase 3): Flask sessions + hashed passwords
 
 ---
 
@@ -34,7 +36,7 @@ The goal is to strengthen understanding of:
 ### Phase 1: CLI Task Manager (Completed)
 
 **Description:**
-A command-line based task manager with persistent storage using JSON.
+A command-line task manager using JSON for persistence.
 
 **Features:**
 
@@ -44,26 +46,53 @@ A command-line based task manager with persistent storage using JSON.
 * Rename tasks
 * Delete tasks
 * Persistent storage using JSON
-* Clean separation of concerns:
+* Separation of concerns:
 
   * `main.py` → CLI interface
-  * `task_manager.py` → business logic
-  * `storage.py` → data persistence
+  * `taskmanager.py` → business logic
+  * `storage.py` → file-based persistence
 
 **Key Concepts Learned:**
 
 * Data modeling (tasks as dictionaries)
 * File I/O with JSON
-* Separation of concerns (service vs storage layer)
-* Working with lists and dictionaries
+* Separation of concerns
 * Basic application architecture
 
 ---
 
-### Phase 1.5: SQLite
+### Phase 1.5: SQLite Integration (Completed)
 
 **Description:**
-Convert the JSON I/O to SQLite (getting away from reading/writing to JSON for memory)
+Refactored the application to replace JSON-based storage with a SQLite database, introducing a more scalable and realistic persistence layer.
+
+**What Changed:**
+
+* Replaced full-file reads/writes with database operations
+* Introduced a `tasks` table with:
+
+  * `task_id` (auto-increment primary key)
+  * `task_title`
+  * `task_completed`
+* Shifted from:
+
+  * “load → modify → save entire list”
+  * to:
+  * “insert/update/delete specific rows”
+
+**Architecture Responsibilities:**
+
+* `storage.py` → Handles all database operations (SQL, connections, queries)
+* `taskmanager.py` → Handles application logic and validation
+* `main.py` → Handles user interaction (CLI)
+
+**Key Concepts Learned:**
+
+* Relational database fundamentals
+* SQL operations (INSERT, SELECT, UPDATE, DELETE)
+* Auto-incrementing IDs
+* Separation of logic vs persistence layers
+* Transforming raw DB rows into application-friendly data structures
 
 ---
 
@@ -96,10 +125,10 @@ Introduce multi-user support with authentication.
 **Planned Features:**
 
 * User registration (signup)
-* Login / logout functionality
-* Password hashing (security)
+* Login and logout functionality
+* Password hashing
 * Session management
-* User-specific tasks (each user sees only their own data)
+* User-specific tasks
 
 **Key Concepts to Learn:**
 
@@ -112,56 +141,98 @@ Introduce multi-user support with authentication.
 
 ## Future Enhancements
 
-* Switch from JSON to a real database (SQLite/PostgreSQL)
+* Upgrade from SQLite to PostgreSQL
 * Add due dates and priorities
 * Task filtering (completed, overdue, etc.)
 * REST API endpoints
-* AI-powered task suggestions or summaries
+* AI-powered task suggestions and prioritization
 
 ---
 
-## Project Structure (Phase 1)
+## Project Structure
 
+```id="r0n9cs"
 task_manager/
-│── main.py          # CLI interface
-│── task_manager.py  # Business logic
-│── storage.py       # JSON persistence
-│── tasks.json       # Data storage
+│── main.py          # CLI interface (user interaction)
+│── taskmanager.py   # Business logic and validation
+│── storage.py       # SQLite database operations
+│── tasks.db         # SQLite database file
+```
 
-## Project Structure (Phase 1.5...using SQLite!)
+---
 
-main.py
-- prompts
-- menu
-- prints messages
-taskmanager.py
-- app logic
-- validation
-- converts storage output into cleaner app data
-storage.py
-- raw db operations
+## How to Run
+
+### Prerequisites
+
+* Python 3 installed (3.8+ recommended)
+
+---
+
+### Steps
+
+1. Clone the repository:
+
+```
+git clone <your-repo-url>
+cd task_manager
+```
+
+2. Run the application:
+
+```
+python main.py
+```
+
+---
+
+### What Happens on First Run
+
+* A SQLite database file (`tasks.db`) will be created automatically
+* A `tasks` table will be initialized if it does not already exist
+
+---
+
+### Using the Application
+
+* Follow the CLI prompts to:
+
+  * Add tasks
+  * View tasks
+  * Edit tasks
+  * Mark tasks as complete
+  * Delete tasks
 
 ---
 
 ## Goals
 
-This project is focused on:
-
-* Building strong backend fundamentals
-* Understanding how applications scale in complexity
-* Creating a solid foundation for full-stack + AI development
+* Build strong backend fundamentals
+* Understand how applications scale in complexity
+* Develop clean, maintainable architecture
+* Prepare for full-stack and AI-driven systems
 
 ---
 
 ## Status
 
- Phase 1 Complete
- Phase 2 In Progress
+* Phase 1: Complete
+* Phase 1.5 (SQLite): Complete
+* Phase 2 (Flask): In Progress
+
+---
+
+## What I Would Improve Next
+* Better error handling (more edge cases)
+* Add a "Goodbye!" message when leaving app
+* CLEAN. UP. THE. COMMENTS!
 
 ---
 
 ## Author Notes
-If you got this far, you're a real one.
-This project is part of a learning journey from backend fundamentals → full-stack development → AI integration. Each phase builds intentionally on the previous one to reinforce real-world engineering practices.
 
----
+This project is part of a hands-on journey from backend fundamentals to full-stack development and AI integration.
+
+Each phase builds intentionally on the previous one to reflect real-world engineering practices and long-term growth.
+
+If you got this far, you're a real one.
