@@ -60,6 +60,13 @@ A command-line based task manager with persistent storage using JSON.
 
 ---
 
+### Phase 1.5: SQLite
+
+**Description:**
+Convert the JSON I/O to SQLite (getting away from reading/writing to JSON for memory)
+
+---
+
 ### Phase 2: Web App (Flask Frontend)
 
 **Description:**
@@ -120,6 +127,19 @@ task_manager/
 │── task_manager.py  # Business logic
 │── storage.py       # JSON persistence
 │── tasks.json       # Data storage
+
+## Project Structure (Phase 1.5...using SQLite!)
+
+main.py
+- prompts
+- menu
+- prints messages
+taskmanager.py
+- app logic
+- validation
+- converts storage output into cleaner app data
+storage.py
+- raw db operations
 
 ---
 

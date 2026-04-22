@@ -6,52 +6,69 @@
 import storage
 
 #add task
-def add_task(newTask):
-    id = 0 
-    task_list = storage.load_tasks()
-    new_task = {}
-    if not task_list:
-        # means empty, 0 elements
-        #create dictionary with this
-        new_task = {
-            "taskId": 1,
-            "taskTitle": newTask,
-            "taskCompleted": False
-        }
+def add_task(task_title):
+    # validate that the title is not empty
+    # maybe trim whitespace
+    if(len(task_title) == 0):
+        # means Empty
+        return False
     else:
-        # get max task id
-        latestID = len(task_list)+1
-        #create dictionary with this
-        new_task = {
-            "taskId": latestID,
-            "taskTitle": newTask,
-            "taskCompleted": False
-        }
-    task_list.append(new_task)
-    storage.save_tasks(task_list)
-
-#rename task
-def rename_task(taskId, updatedTask):
-    task_list = storage.load_tasks()
-    for task in task_list:
-         if task["taskId"] == taskId:
-             task["taskTitle"] = updatedTask
-    storage.save_tasks(task_list)
+        storage.insert_task(task_title)
+        return True
 
 #delete task
-def delete_task(taskId):
-    task_list = storage.load_tasks()    
-    # used to filter current list and remove id passed in, returns list - that element
-    updated_task_list = [t for t in task_list if t.get('taskId') != taskId]
-    # when we delete, we need to update all of the taskIds to be in order for clarity to user
-    for index, task in enumerate(updated_task_list, 1):
-        task["taskId"] = index
-    storage.save_tasks(updated_task_list)
+def delete_task(task_ID):
+    if not storage.get_all_tasks():
+        return False
+    else:
+        storage.delete_task(task_ID)
+        return True
+
+#rename task -- we assume task exists, hence 
+def rename_task(task_ID, updated_task):
+    if not storage.get_all_tasks():
+    # means empty, 0 elements
+        return False # I don't like this, but I'm not sure if I should keep the prompts in here or not?
+    else:
+        # for now, assuming user puts a valid index
+        # delete
+        storage.update_task_title(task_ID, updated_task)        
+        return True
+
+def get_tasks():
+# call storage.get_all_tasks()
+# take each row tuple
+# convert it into a task dictionary
+# return the list of task dictionaries
+    rows = storage.get_all_tasks()
+    tasks = []
+    for row in rows:
+        task = {
+            "taskId": row[0],
+            "taskTitle": row[1],
+            "taskCompleted": bool(row[2])
+        }
+        tasks.append(task)
+    return tasks
+
 
 #mark task as complete
-def mark_complete(taskId):
-    task_list = storage.load_tasks()
-    for task in task_list:
-         if task["taskId"] == taskId:
-             task["taskCompleted"] = True
-    storage.save_tasks(task_list)
+def mark_complete(task_ID):
+    if not storage.get_all_tasks():
+        return False
+    else: 
+        storage.mark_task_completed(task_ID)
+        return True    
+
+
+#TO DO
+#if not storage.get_all_tasks() --> 
+# okay for now, but they only check whether any tasks exist, not whether the specific ID exists
+# So if the user enters 999, code will still say “Task deleted!” even if that task wasn’t there.
+# As expected. Need to fix
+
+# add_task(title)
+# rename_task(task_id, new_title)
+# mark_complete(task_id)
+# delete_task(task_id)
+# maybe get_tasks() which calls storage and converts rows into task dictionaries
