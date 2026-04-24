@@ -34,6 +34,7 @@ def main():
         print("Type 0: Exit Task Manager")
         
         current_action = int(input())
+        tasks = taskmanager.get_tasks()
         
         if(current_action == 1):
             # add task
@@ -47,39 +48,43 @@ def main():
 
         elif (current_action == 2):
             # delete task
-            print("Which task do you want to delete?")
-            print_tasks()
-            delete_task = int(input())
-            if(taskmanager.delete_task(delete_task)):
-                print("Task deleted!")
-            else:
+            if not tasks:
                 print("List empty, nothing to delete!")
+            else:
+                print("Which task do you want to delete?")
+                print_tasks()
+                delete_task = int(input())
+                if taskmanager.delete_task(delete_task):
+                    print("Task deleted!")
             print()
 
         elif (current_action == 3):
             # edit/rename task
-            print("Which task do you want to edit?")
-            print_tasks()
-            edit_task = int(input())
-            # for now, assuming user puts a valid index TODO: will need to fix
-            print("What do you want to edit the task to be?")
-            updated_task = input()
-            if(taskmanager.rename_task(edit_task, updated_task)):
-                print("Task edited!")
-            else:
+            if not tasks:
                 print("List empty, nothing to edit!")
+            else:
+                print("Which task do you want to edit?")
+                print_tasks()
+                edit_task = int(input())
+
+                print("What do you want to edit the task to be?")
+                updated_task = input()
+
+                if taskmanager.rename_task(edit_task, updated_task):
+                    print("Task edited!")
             print()
 
         elif (current_action == 4):
             # mark task as completed
-            print("Which task do you want to mark as completed?")
-            print_tasks()
-            complete_task = int(input())
-            # for now, assuming user puts a valid index
-            if(taskmanager.mark_complete(complete_task)):
-                print("Task completed!")
+            if not tasks:
+                print("List empty, nothing to mark complete!")
             else:
-                print("No tasks to mark complete!")
+                print("Which task do you want to mark as completed?")
+                print_tasks()
+                complete_task = int(input())
+
+                if taskmanager.mark_complete(complete_task):
+                    print("Task completed!")
             print()
 
         elif (current_action == 5):
@@ -95,3 +100,7 @@ if __name__ == "__main__":
 # prompt user
 # call taskmanager
 # print results
+
+# so main -- user experience
+# task manager -- interacts with the db, liason layer between db and user
+# storage -- interacts with db 
