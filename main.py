@@ -17,7 +17,7 @@ def print_tasks():
         print("No tasks!")
     else:
         for task in tasks:
-            print(f'{task["taskId"]}. {task["taskTitle"]} - Completed: {task["taskCompleted"]}')
+            print(f'Task ID: {task["taskId"]}. {task["taskTitle"]} - Completed: {task["taskCompleted"]}')
 
 def main():
     # Your program logic goes here
